@@ -206,7 +206,7 @@
         <tags>EditorStack</tags>
         <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_TuIKsDbpEe200qR66lJPoQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="push.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;push.java&quot; partName=&quot;push.java&quot; title=&quot;push.java&quot; tooltip=&quot;Git/src/push.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/Git/src/push.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;137&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;push.java&quot; partName=&quot;push.java&quot; title=&quot;push.java&quot; tooltip=&quot;Git/src/push.java&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/Git/src/push.java&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;175&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>removeOnHide</tags>
           <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
@@ -360,7 +360,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="__LEEACprEe2C7vqT49RZ2A" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_PL9KkDbqEe27QP1pBnk4pQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_-6JTQSprEe2C7vqT49RZ2A"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_0P_ogDbrEe2QnsegYyXxvw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_-6JTQSprEe2C7vqT49RZ2A"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="__LErECprEe2C7vqT49RZ2A" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -391,7 +391,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="__LErFyprEe2C7vqT49RZ2A" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_PMDRMDbqEe27QP1pBnk4pQ" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_-6FoxCprEe2C7vqT49RZ2A"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_0QFIEDbrEe2QnsegYyXxvw" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_-6FoxCprEe2C7vqT49RZ2A"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="__LErGCprEe2C7vqT49RZ2A" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -986,7 +986,7 @@
     <bindings xmi:id="_-7D5ICprEe2C7vqT49RZ2A" keySequence="ALT+CR" command="_-56CliprEe2C7vqT49RZ2A"/>
   </bindingTables>
   <bindingTables xmi:id="_-7xDwSprEe2C7vqT49RZ2A" contributorURI="platform:/fragment/org.eclipse.e4.ui.workbench.renderers.swt.cocoa" bindingContext="_-5S-nCprEe2C7vqT49RZ2A">
-    <bindings xmi:id="_Oz3asDbqEe27QP1pBnk4pQ" keySequence="M1+W" command="_-7wctiprEe2C7vqT49RZ2A"/>
+    <bindings xmi:id="_z31nMDbrEe2QnsegYyXxvw" keySequence="M1+W" command="_-7wctiprEe2C7vqT49RZ2A"/>
   </bindingTables>
   <bindingTables xmi:id="__T2MkSprEe2C7vqT49RZ2A" bindingContext="__T2MkCprEe2C7vqT49RZ2A"/>
   <bindingTables xmi:id="__T6eASprEe2C7vqT49RZ2A" bindingContext="__T6eACprEe2C7vqT49RZ2A"/>
@@ -2333,7 +2333,7 @@
   <addons xmi:id="_-5S-pSprEe2C7vqT49RZ2A" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_-5S-piprEe2C7vqT49RZ2A" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_-5mgkCprEe2C7vqT49RZ2A" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_z3OjMDbrEe2QnsegYyXxvw" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <addons xmi:id="_-7v1oCprEe2C7vqT49RZ2A" elementId="org.eclipse.e4.ui.workbench.renderers.swt.cocoa.CocoaUIHandler" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.cocoa.CocoaUIHandler"/>
   <categories xmi:id="_-52YMCprEe2C7vqT49RZ2A" elementId="org.eclipse.team.ui.category.team" name="Version control (Team)" description="Actions that apply when working with a version control system"/>
