@@ -1,0 +1,45 @@
+* {
+    font-family: monospace;
+    text-align: center;
+}
+body {
+    background-image: url(../images/background-photo.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+#basic {
+    text-align: center;
+    margin-left: auto ;
+    margin-right: auto;
+    padding: 7% 15%;
+    
+}
+/*Headings*/
+h1, h2 {
+    color: #fff;
+}
+h4 {
+   padding-bottom: 20px;
+}
+/*Display weather*/
+.card {
+    text-align: center;
+    margin: auto;
+    width: 50%;
+}
+
+.weather {
+    padding: 3% 2%;
+    
+}
+.card-header {
+    background-color: burlywood !important;
+    color: #000 !important;
+}
+.card-body {
+    text-align: left;
+    background-color: bisque !important;
+    font-size: large;
+}
