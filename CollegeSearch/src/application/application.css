@@ -1,0 +1,12 @@
+.root {
+	-fx-background-color: #2F2FA2;
+}
+.label {
+	-fx-text-fill: white;
+	
+}
+#heading {
+	-fx-text-alignment:center;
+	-fx-alignment:center;
+}
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <MenuBar fx:id="menuBar" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <menus>
+            <Menu fx:id="homeMenu" mnemonicParsing="false" text="Home">
+               <items>
+                  <MenuItem fx:id="searchMenu" mnemonicParsing="false" onAction="#searchFlip" onMenuValidation="#searchFlip" text="Search" />
+               </items></Menu>
+          <Menu fx:id="accounMenu" mnemonicParsing="false" text="Account">
+            <items>
+                  <MenuItem fx:id="detailsMenu" mnemonicParsing="false" onAction="#detailsFlip" text="Account Details" />
+                  <MenuItem fx:id="editAccountMenu" mnemonicParsing="false" onAction="#editFlip" text="Edit Account" />
+                  <MenuItem fx:id="favoritesMenu" mnemonicParsing="false" onAction="#favoritesFlip" text="Favorites" />
+              <MenuItem fx:id="logOutIMenu" mnemonicParsing="false" onAction="#loginFlip" onMenuValidation="#loginFlip" text="Log Out" />
+            </items>
+          </Menu>
+        </menus>
+         <BorderPane.margin>
+            <Insets bottom="40.0" />
+         </BorderPane.margin>
+      </MenuBar>
+   </top>
+</BorderPane>

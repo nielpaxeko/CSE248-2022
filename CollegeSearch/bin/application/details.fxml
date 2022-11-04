@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff0c4" height="200.0" layoutX="172.0" layoutY="97.0" stroke="BLACK" strokeType="INSIDE" width="250.0" />
+      <Label layoutX="176.0" layoutY="104.0" text="First Name:" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="110.0" />
+      <Label layoutX="180.0" layoutY="141.0" text="Last Name:" AnchorPane.topAnchor="141.0" />
+      <Label layoutX="181.0" layoutY="170.0" text="Username:" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="170.0" />
+      <Label layoutX="180.0" layoutY="201.0" text="Email:" AnchorPane.topAnchor="201.0" />
+      <Label fx:id="currentFirst" layoutX="249.0" layoutY="110.0" text="firstPlaceHolder" />
+      <Label fx:id="currentLast" layoutX="250.0" layoutY="141.0" text="lastPlaceHolder" />
+      <Label fx:id="currentUsername" layoutX="249.0" layoutY="170.0" text="usernamePlaceHolder" />
+      <Label fx:id="currentEmail" layoutX="220.0" layoutY="201.0" text="emailPlaceHolder" />
+   </children>
+</AnchorPane>
