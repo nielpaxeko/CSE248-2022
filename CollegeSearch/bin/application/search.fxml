@@ -15,7 +15,7 @@
       <ChoiceBox fx:id="stateBox" layoutX="219.0" layoutY="107.0" prefHeight="26.0" prefWidth="160.0" />
       <Label fx:id="stateLabel" contentDisplay="CENTER" layoutX="254.0" layoutY="90.0" prefHeight="17.0" prefWidth="91.0" text="Search by State:" />
       <Button fx:id="searchButton" layoutX="253.0" layoutY="142.0" mnemonicParsing="false" onAction="#search" prefHeight="26.0" prefWidth="92.0" text="Search" />
-      <ListView fx:id="resultsList" layoutX="125.0" layoutY="174.0" prefHeight="389.0" prefWidth="350.0" />
+      <ListView fx:id="resultsList" layoutX="125.0" layoutY="174.0" onMousePressed="#getResults" prefHeight="389.0" prefWidth="350.0" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

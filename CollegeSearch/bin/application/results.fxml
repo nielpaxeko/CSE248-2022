@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
       <Label fx:id="schoolNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="20.0" prefHeight="17.0" prefWidth="166.0" text="schoolNamePlaceholder" />
-      <TableView layoutX="200.0" layoutY="45.0" prefHeight="334.0" prefWidth="500.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
-        <columns>
-          <TableColumn prefWidth="118.0" text="Details" />
-          <TableColumn minWidth="0.0" prefWidth="381.0" />
-        </columns>
-      </TableView>
+      <Button fx:id="backButton" layoutX="161.0" layoutY="341.0" mnemonicParsing="false" onAction="#searchFlip" text="Make new search" />
+      <Button fx:id="addToFavoritesButton" layoutX="332.0" layoutY="341.0" mnemonicParsing="false" onAction="#addToFavorites" text="Add to favorites" />
+      <TextArea fx:id="detailsBox" layoutX="116.0" layoutY="65.0" prefHeight="227.0" prefWidth="369.0" />
    </children>
 </AnchorPane>

@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff0c4" height="200.0" layoutX="172.0" layoutY="97.0" stroke="BLACK" strokeType="INSIDE" width="250.0" />
+       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8dca4" height="319.0" layoutX="68.0" layoutY="25.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
       <Label layoutX="176.0" layoutY="104.0" text="First Name:" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="110.0" />
       <Label layoutX="180.0" layoutY="141.0" text="Last Name:" AnchorPane.topAnchor="141.0" />
       <Label layoutX="181.0" layoutY="170.0" text="Username:" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="170.0" />

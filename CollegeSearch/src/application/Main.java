@@ -1,6 +1,7 @@
 package application;	
 import server.*;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,8 +30,10 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.skin.MenuBarSkin;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -43,6 +46,9 @@ public class Main extends Application implements Initializable {
 	private Parent root;
 	private String name;
 	private String state;
+	private String school = "";
+	private static CurrentUser user;
+	
 	@FXML
     private BorderPane borderPane = new BorderPane();
 	static Connection connection = null;
@@ -66,6 +72,7 @@ public class Main extends Application implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	
 	// Login elements
 	
     @FXML
@@ -97,7 +104,7 @@ public class Main extends Application implements Initializable {
       	  	stage.setScene(scene);
       	  	pane = FXMLLoader.load(getClass().getResource("/application/search.fxml"));
       	  	paneSwitch(pane);
-      	  
+      	  	menuBar = new MenuBar();
       	  	menuBar.setDisable(false);
       	  	menuBar.setVisible(true);
     	}
@@ -109,10 +116,10 @@ public class Main extends Application implements Initializable {
     	
     }
     
-    private boolean loginCheck(String userName, String passWord) throws SQLException {
+    private static boolean loginCheck(String userName, String passWord) throws SQLException {
     	Boolean bool = false;
     	PreparedStatement preparedStatement = null;
-    	ResultSet resultSet = null;
+    	ResultSet rs = null;
     	try {
 			// establish a connection
 			connection = ConnectionUtilities.getConnection("Users.sqlite");
@@ -122,9 +129,12 @@ public class Main extends Application implements Initializable {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, userName);
 			preparedStatement.setString(2, passWord);
-			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()==true) {
+			rs = preparedStatement.executeQuery();
+			// If user exists, create instance of current user
+			if (rs.next()==true) {
 				bool = true;
+				user = new CurrentUser(rs.getInt("ID"),rs.getString("FirstName").toString(), rs.getString("LastName").toString(), rs.getString("UserName").toString(), rs.getString("email").toString(),rs.getString("Password").toString());
+				
 			} else {
 				bool = false;
 			}
@@ -242,26 +252,65 @@ public class Main extends Application implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1){
     	stateBox.getItems().addAll(states);
     	
-		
+    	
 	}
     @FXML
     void search(ActionEvent event) throws IOException, SQLException {
     	name = nameField.getText();
     	state  = stateBox.getValue();
-    	/*borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
-    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-  	  	scene = new Scene(borderPane);
-  	  	stage.setScene(scene);
-    	results = FXMLLoader.load(getClass().getResource("/application/results.fxml"));
-    	paneSwitch(results);*/
   	  	displaySchool(name, state);
     }
-	
+    @FXML
+    void getResults(MouseEvent event) throws Exception {
+    	this.school = resultsList.getSelectionModel().getSelectedItem().toString();
+    
+    	borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+  	  	scene = new Scene(borderPane, 600, 700);
+  	  	stage.setScene(scene);
+  	  	pane = FXMLLoader.load(getClass().getResource("/application/results.fxml"));
+  	  	borderPane.setCenter(pane);
+  	  	schoolNameLabel.setText(user.getCurrentSchool());
+  	  	displaySchoolDetails(school);
+    }
+    void displaySchoolDetails(String name) throws SQLException {
+    	user.setCurrentSchool(name);
+    	schoolNameLabel.setText(user.getCurrentSchool());
+    	PreparedStatement preparedStatement = null;
+    	ResultSet resultSet = null;
+    	try {
+    		connection = ConnectionUtilities.getConnection("MyDB.sqlite");
+			// create a statement object from the connection
+			statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			// create a table Users
+			ResultSet rs = statement.executeQuery("SELECT * FROM Schools WHERE NAME LIKE '%"+name+"%'");
+			System.out.println("Name: " + rs.getString("Name"));
+			System.out.println("ID: " + rs.getString("ID"));
+			System.out.println("State: " + rs.getString("State"));
+			schoolNameLabel.setText(rs.getString("Name"));
+		} catch (Exception e) {
+			
+		} finally {
+			connection.close();
+		}
+    }
+    
+    
 	// Results elements
     @FXML
     private Button backButton;
     @FXML
-    private Label resultsLabel;
+    private TextArea detailsBox;
+    @FXML
+    private Button addToFavoritesButton;
+    @FXML
+    public Label schoolNameLabel = new Label();
+
+    @FXML
+    void addToFavorites(ActionEvent event) {
+
+    }
    //This is where the magic happens
 	public void displaySchool(String name, String state) throws SQLException {
 		resultsList.getItems().clear();
@@ -272,14 +321,15 @@ public class Main extends Application implements Initializable {
 			statement = connection.createStatement();
 			statement.setQueryTimeout(30);
 			// create a table Users
-			ResultSet rs = statement.executeQuery("SELECT * FROM Schools WHERE State = '"+state+"' OR NAME LIKE '%"+name+"%'");
+			ResultSet rs = statement.executeQuery("SELECT * FROM Schools WHERE State ='"+state+"' OR NAME LIKE '%"+name+"%'");
 			
 			// extract and display data from resultset
 			while(rs.next()) {
-				resultsList.getItems().add(rs.getString("Name") + "      State: " + rs.getString("State"));
-				System.out.println("Name: " + rs.getString("Name"));
-				System.out.println("ID: " + rs.getString("ID"));
-				System.out.println("State: " + rs.getString("State"));
+				resultsList.getItems().add(rs.getString("Name"));
+			    //State: " + rs.getString("State")
+				//System.out.println("Name: " + rs.getString("Name"));
+				//System.out.println("ID: " + rs.getString("ID"));
+				//System.out.println("State: " + rs.getString("State"));
 			}
 			
 		} catch (SQLException e) {
@@ -299,18 +349,66 @@ public class Main extends Application implements Initializable {
     private Label currentUsername;
     // Edit elements
     @FXML
-    private TextField confrimNewPassword;
+    private Button deleteButton;
+    @FXML
+    private TextField confirmNewPassword = new TextField();
     @FXML
     private Button editButton;
     @FXML
-    private TextField newEmail;
+    private TextField newEmail = new TextField();
     @FXML
-    private TextField newPassword;
+    private TextField newPassword = new TextField();
     @FXML
-    private TextField newUsername;
+    private TextField newUsername = new TextField();
     @FXML
-    void edit(ActionEvent event) {
+    private Label editLabel = new Label();
+    @FXML
+    private TextField oldPassword = new TextField();
+    @FXML
+    void delete(ActionEvent event) {
+    	System.out.println(user.getId());
+		System.out.println(user.getCurrentFirstName());
+		System.out.println(user.getCurrentLastName());
+		System.out.println(user.getCurrentUserName());
+		System.out.println(user.getCurrentEmail());
+		System.out.println(user.getCurrentPassword());
+    }
 
+    @FXML
+    void edit() throws SQLException, NullPointerException {
+    	//Get variables
+    	
+    	String newName = newUsername.getText().toString().trim();
+    	String newMail = newEmail.getText().toString().trim();
+    	String oldWord = oldPassword.getText().toString().trim();
+    	String newWord = newPassword.getText().toString().trim();
+    	String confirm = confirmNewPassword.getText().toString().trim();
+    	//Connect if passwords match
+    	connection = ConnectionUtilities.getConnection("Users.sqlite");
+    	PreparedStatement ps = null;
+    	
+    	if (!oldWord.equals(user.getCurrentPassword().toString())) {
+    		editLabel.setText("Old password entered incorrectly");
+    		editLabel.setTextFill(Color.color(1, 0, 0));
+    	}
+    	else if (!newWord.equals(confirm)) {
+    		editLabel.setText("New passwords do not match");
+    		editLabel.setTextFill(Color.color(1, 0, 0));
+    	}
+    	else  {
+    		String sql = ("UPDATE Users SET UserName = ?, email = ?, Password = ? WHERE UserName = ?");
+        	ps = connection.prepareStatement(sql);
+        	ps.setString(1, newName);
+        	ps.setString(2, newMail);
+        	ps.setString(3, newWord);
+        	ps.setString(4, user.getCurrentUserName().toString());
+        	ps.execute();
+    		editLabel.setText("Success");
+    		editLabel.setTextFill(Color.color(0, 1, 0));
+    		
+    	}
+    	
+    	
     }
     // Menu
 	@FXML
@@ -359,13 +457,22 @@ public class Main extends Application implements Initializable {
 		
 	}
 	@FXML
+	void resultsFlip(ActionEvent event) throws IOException {
+		pane = FXMLLoader.load(getClass().getResource("/application/results.fxml"));
+  	  	paneSwitch(pane);
+	}
+	@FXML
 	void detailsFlip(ActionEvent event) throws IOException {
 		pane = FXMLLoader.load(getClass().getResource("/application/details.fxml"));
   	  	paneSwitch(pane);
 	}
 	@FXML
 	void loginFlip(ActionEvent event) throws IOException {
-		pane = FXMLLoader.load(getClass().getResource("/application/login.fxml"));
+		borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
+    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+  	  	scene = new Scene(borderPane, 600, 700);
+  	  	stage.setScene(scene);
+  	  	pane = FXMLLoader.load(getClass().getResource("/application/login.fxml"));
   	  	paneSwitch(pane);
 	}
 	@FXML
