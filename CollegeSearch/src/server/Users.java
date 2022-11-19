@@ -37,6 +37,8 @@ public class Users {
 					+ "VALUES ('Joey', 'Smith', 'jsmith@gmail.com', 'jsmith', 'js456')");
 			
 			ResultSet rs = statement.executeQuery("SELECT * FROM Users");
+			// Now we create a favorites list
+			
 			
 			// extract and display data from resultset
 			while(rs.next()) {

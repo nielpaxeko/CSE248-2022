@@ -8,7 +8,6 @@ public class CurrentUser {
 	private String currentEmail;
 	private String currentPassword;
 	private String currentSchool;
-	
 	CurrentUser(int id, String firstName, String lastName, String userName, String email, String passWord) {
 		this.id=id;
 		this.currentFirstName=firstName;
