@@ -1,15 +1,15 @@
 package meats;
 
 public class Chicken implements Meat {
-
-	@Override
-	public void showMeat() {
-		System.out.println("Chicken");
+	public Chicken() {
+		
 	}
-
 	@Override
-	public void cookMeat() {
-		System.out.println("Chicken is to be grilled");
+	public double cost() {
+		return .50;
 	}
-
+	@Override
+	public String getDescription() {
+		return "Chicken ";
+	}
 }

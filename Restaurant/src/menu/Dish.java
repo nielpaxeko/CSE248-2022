@@ -2,6 +2,9 @@ package menu;
 
 
 public abstract class Dish {
+	private String description;
+	public abstract double cost();
+	public abstract String getDescription();
 	private String meat;
 	private CookingBehavior behavior;
 	
@@ -11,7 +14,7 @@ public abstract class Dish {
 	public String cookDish() {
 		return behavior.cook();
 	}
-	public abstract String getDescription();
+	
 	
 	
 }

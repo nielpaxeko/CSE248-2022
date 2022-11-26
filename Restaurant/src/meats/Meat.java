@@ -1,6 +1,6 @@
 package meats;
 
 public interface Meat {
-	void showMeat();
-	void cookMeat();
+	public abstract double cost();
+	public abstract String getDescription();
 }

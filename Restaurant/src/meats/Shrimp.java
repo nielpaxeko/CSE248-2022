@@ -1,12 +1,12 @@
 package meats;
 
-public class Pork implements Meat {
+public class Shrimp implements Meat {
 	@Override
 	public double cost() {
-		return 1.00;
+		return 3.00;
 	}
 	@Override
 	public String getDescription() {
-		return "Pork ";
+		return "Shrimp ";
 	}
 }

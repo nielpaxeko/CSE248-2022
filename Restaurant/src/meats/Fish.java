@@ -1,16 +1,12 @@
 package meats;
 
 public class Fish implements Meat {
-
 	@Override
-	public void showMeat() {
-		System.out.println("Fish");
-		
+	public double cost() {
+		return 2.00;
 	}
-
 	@Override
-	public void cookMeat() {
-		System.out.println("This fish is to be roasted");
+	public String getDescription() {
+		return "Fish ";
 	}
-
 }
