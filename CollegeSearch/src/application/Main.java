@@ -22,6 +22,7 @@ import server.ConnectionUtilities;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -46,8 +47,7 @@ public class Main extends Application implements Initializable {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-	private String name;
-	private String state;
+	
 	private String school = "";
 	private static CurrentUser user;
 	
@@ -241,44 +241,46 @@ public class Main extends Application implements Initializable {
 	// Search elements
     @FXML
     private ListView<String> resultsList = new ListView<String>();
-    String[] states = {"AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MH", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY" };
     @FXML
     private Label nameLabel;
     @FXML
     private Button searchButton;
     @FXML
     private ChoiceBox<String> stateBox = new ChoiceBox();
-     @FXML
+    String[] states = {"AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MH", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY" };
+    @FXML
     private Label stateLabel;
-     @FXML
-     private ChoiceBox<String> academicBox = new ChoiceBox();
-     @FXML
-     private Slider acceptanceSlider;
-     @FXML
-     private CheckBox largeBox;
-     @FXML
-     private CheckBox medBox;
-     @FXML
-     private CheckBox privateForBox;
-     @FXML
-     private CheckBox privateNonBox;
-     @FXML
-     private CheckBox publicBox;
-     @FXML
-     private Slider satSlider;
-     @FXML
-     private AnchorPane search;
-     @FXML
-     private CheckBox smallBox;
-     @FXML
-     private Slider transferSlider;
+    @FXML
+    private ChoiceBox<String> academicBox = new ChoiceBox();
+    String[] majors = {"Agriculture", "Biology", "Business", "Construction", "Communication Studies", "Computer Science",
+    		"Criminal Justice", "Culinary Studies", "Education", "Engineering", "Linguistics", "Gender Studies", "Health", "History",
+    		"Humanities", "Law", "Mathematics", "Philosophy", "Psychology", "Physics", "Social Sciences", "Transportation"};
+   
+    @FXML
+    private Slider acceptanceSlider;
+    @FXML
+    private CheckBox largeBox = new CheckBox();
+    @FXML
+    private CheckBox medBox = new CheckBox();
+    @FXML
+    private Slider satSlider;
+    @FXML
+    private AnchorPane search;
+    @FXML
+    private CheckBox smallBox = new CheckBox();
+    String[] types = {"Public", "Private for-profit", "Private nonprofit"};
+    @FXML
+    private ChoiceBox<String> typeBox = new ChoiceBox();
+    @FXML
+    private Slider transferSlider;
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1){
     	stateBox.getItems().addAll(states);
+    	academicBox.getItems().addAll(majors);
+    	typeBox.getItems().addAll(types);
     	displaySchoolData();
-    	
-    	
 	}
+   
     // Show data from School
     public void displaySchoolData() {
     	if (user!=null&&resultsList!=null&&user.getCurrentSchool()!=null) {
@@ -314,55 +316,124 @@ public class Main extends Application implements Initializable {
     		}
     	}
     }
-    
     @FXML
     void search(ActionEvent event) throws IOException, SQLException {
-    	name = nameField.getText();
-    	state  = stateBox.getValue();
-  	  	displaySchool(name, state);
+    	// Get name or state
+    	String name = nameField.getText();//DONE
+    	String state  = stateBox.getValue();//DONE
+    	// Sliders
+    	double admission = acceptanceSlider.getValue();
+    	double transfer = transferSlider.getValue();
+    	double sat = satSlider.getValue();
+    	// Major
+    	String major = academicBox.getValue();
+    	// Checkboxes
+    	Boolean small = smallBox.isSelected();//DONE
+    	Boolean med = medBox.isSelected();//DONE
+    	Boolean large = largeBox.isSelected();//DONE
+    	String type = typeBox.getValue();
+  	  	displaySchool(name, state, admission, transfer, sat, major, small, med, large, type);
     }
-    @FXML
+    //This is where the magic happens
+   	public void displaySchool(String name, String state, double admission, double transfer, double sat, String major, Boolean small, Boolean med, Boolean large, String type) throws SQLException {
+   		resultsList.getItems().clear();
+   		ResultSet rs = null;
+   		String query = "";
+   		int maxSize = getMaxPopulation(small, med, large);
+   		int minSize = getMinPopulation(small, med, large);
+		String nameQuery = "Name LIKE '%"+name+"%'";
+		String stateQuery = "State = '"+state+"'";
+		String admissionQuery = "AdmissionRate > '"+(admission)+"'";
+		String transferQuery = "TransferRate > '"+(transfer)+"'";
+		String satQuery = "SAT BETWEEN '"+(sat-100)+"' AND '"+(sat+100)+"'";
+		String majorQuery = "Programs LIKE '%"+major+"%'";
+		String sizeQuery = "Population BETWEEN '"+minSize+"' AND '"+maxSize+"'";
+		String typeQuery = "Ownership = '"+type+"'";
+   		try {
+   			connection = ConnectionUtilities.getConnection("MyDB.sqlite");
+   			statement = connection.createStatement();
+   			statement.setQueryTimeout(30);
+   			
+   			// If no specific data has been inserted 
+   			if (name.isEmpty()&&state==null&&admission==100&&transfer==100&&sat==1000&&major==null&&type==null&&!small&&!med&&!large) {
+   				resultsFoundLabel.setText("Enter search inputs before continuing");
+   			}
+   			if (!name.isEmpty()) {
+   				query += nameQuery + " AND ";
+   			}
+   			if (state!=null) {
+   				query +=  stateQuery + " AND ";
+   			} 
+   			if (sat!=1000) {
+   				query +=  satQuery + " AND ";
+   			}
+   			if (major!=null) {
+   				query += majorQuery + " AND ";
+   			}
+   			if (type!=null) {
+   				query += typeQuery + " AND ";
+   			}
+   			
+   		} catch (SQLException e) {
+   			e.printStackTrace();
+   		} finally {
+   			if (!query.isEmpty()) {
+   				rs = statement.executeQuery("SELECT * FROM Schools WHERE " + query + admissionQuery + " AND " + transferQuery + " AND " + sizeQuery);
+   				addToResultsFound(rs);
+   			}
+   			ConnectionUtilities.closeConnection(connection);
+   			
+   		}
+   	}
+    private void addToResultsFound(ResultSet rs) throws SQLException {
+    	int resultsFound = 0;
+    	while(rs.next()) {
+				resultsList.getItems().add(rs.getString("Name"));
+				resultsFound++;
+		}
+    	resultsFoundLabel.setText("Results Found: " + resultsFound);
+    }
+   	
+    private int getMaxPopulation(Boolean small, Boolean med, Boolean large) {
+    	if (med&&!large) {
+    		return 15000;
+    	} else if (small&&!med&&!large) {
+    		return 5000;
+    	} else {
+    		return 50000;
+    	}
+	}
+    
+    private int getMinPopulation(Boolean small, Boolean med, Boolean large) {
+    	if (!small&&med) {
+    		return 5000;
+    	} else if (!small&&!med&&large) {
+    		return 15000;
+    	} else {
+    		return 0;
+    	}
+	}
+    
+
+	@FXML
     void getResults(MouseEvent event) throws Exception {
     	try  {
     		this.school = resultsList.getSelectionModel().getSelectedItem().toString();
+    		user.setCurrentSchool(school);
+    		borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
+        	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+      	  	scene = new Scene(borderPane, 600, 700);
+      	  	stage.setScene(scene);
+      	  	pane = FXMLLoader.load(getClass().getResource("/application/results.fxml"));
+      	  	paneSwitch(pane);
     	} catch (NullPointerException e) {
-    		System.out.print("No school has been selected");
+    		System.out.println("No school has been selected ");
     	}
     	
-    	user.setCurrentSchool(school);
-    	borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
-    	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-  	  	scene = new Scene(borderPane, 600, 700);
-  	  	stage.setScene(scene);
-  	  	pane = FXMLLoader.load(getClass().getResource("/application/results.fxml"));
-  	  	paneSwitch(pane);
-  	  	schoolNameLabel.setText(user.getCurrentSchool());
-  	  	displaySchoolDetails(school);
     }
-    void displaySchoolDetails(String name) throws SQLException {
-    	PreparedStatement preparedStatement = null;
-    	ResultSet resultSet = null;
-    	try {
-    		connection = ConnectionUtilities.getConnection("MyDB.sqlite");
-			// create a statement object from the connection
-			statement = connection.createStatement();
-			statement.setQueryTimeout(30);
-			// create a table Users
-			ResultSet rs = statement.executeQuery("SELECT * FROM Schools WHERE NAME LIKE '%"+name+"%'");
-			System.out.println("Name: " + rs.getString("Name"));
-			System.out.println("ID: " + rs.getString("ID"));
-			System.out.println("State: " + rs.getString("State"));
-			schoolNameLabel.setText(rs.getString("Name"));
-		} catch (Exception e) {
-			
-		} finally {
-			connection.close();
-			schoolNameLabel.setText(user.getCurrentSchool());
-		}
-    }
-    
-    
-	// Results elements
+	// Results element
+	@FXML
+	private Label resultsFoundLabel;
     @FXML
     private Button backButton;
     @FXML
@@ -398,30 +469,7 @@ public class Main extends Application implements Initializable {
     void addToFavorites(ActionEvent event) {
 
     }
-   //This is where the magic happens
-	public void displaySchool(String name, String state) throws SQLException {
-		resultsList.getItems().clear();
-		try {
-			// establish a connection
-			connection = ConnectionUtilities.getConnection("MyDB.sqlite");
-			// create a statement object from the connection
-			statement = connection.createStatement();
-			statement.setQueryTimeout(30);
-			// create a table Users
-			ResultSet rs = statement.executeQuery("SELECT * FROM Schools WHERE State ='"+state+"' OR NAME LIKE '%"+name+"%'");
-			
-			// extract and display data from resultset
-			while(rs.next()) {
-				resultsList.getItems().add(rs.getString("Name"));
-			   
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectionUtilities.closeConnection(connection);
-		}
-	}
+  
     // Account elements
 	@FXML
 	private Label currentEmail;
@@ -461,7 +509,6 @@ public class Main extends Application implements Initializable {
     @FXML
     void edit() throws SQLException, NullPointerException {
     	//Get variables
-    	
     	String newName = newUsername.getText().toString().trim();
     	String newMail = newEmail.getText().toString().trim();
     	String oldWord = oldPassword.getText().toString().trim();
@@ -489,10 +536,7 @@ public class Main extends Application implements Initializable {
         	ps.execute();
     		editLabel.setText("Success");
     		editLabel.setTextFill(Color.color(0, 1, 0));
-    		
     	}
-    	
-    	
     }
     // Menu
 	@FXML

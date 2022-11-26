@@ -14,7 +14,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,22 +22,18 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-
-
-
-
-
 public class bridge {
 	static String inline = "";
 	static Connection connection = null;
 	static Statement statement = null;
 	public static void main(String[] args) throws MalformedURLException, SQLException {
-		createTable();
+		//createTable();
 		try {
-			String tail = "&per_page=2&api_key=qinqQmQLaAi6LkMHWnddUduplNjPdqLU3jzsRaIL";
-			String state = "al";
+			String tail = "&per_page=10&api_key=qinqQmQLaAi6LkMHWnddUduplNjPdqLU3jzsRaIL";
+			String state = "wy";
 			String fields = "&fields=id,school.name,school.city,school.state,school.zip,school.school_url,school.ownership,latest.admissions.admission_rate.overall,latest.completion.transfer_rate.4yr.full_time_pooled,latest.cost.tuition.in_state,latest.cost.tuition.out_of_state,latest.admissions.sat_scores.average.overall,latest.student.size,latest.academics.program.bachelors";
 			String source = "https://api.data.gov/ed/collegescorecard/v1/schools.json?school.state=";
+			//String full = "https://api.data.gov/ed/collegescorecard/v1/schools.json?school.state=al&fields=id,school.name,school.city,school.state,school.zip,school.school_url,school.ownership,latest.admissions.admission_rate.overall,latest.completion.transfer_rate.4yr.full_time_pooled,latest.cost.tuition.in_state,latest.cost.tuition.out_of_state,latest.admissions.sat_scores.average.overall,latest.student.size,latest.academics.program.bachelors&per_page=2&api_key=qinqQmQLaAi6LkMHWnddUduplNjPdqLU3jzsRaIL";
 			URL url = new URL(source+state+fields+tail);
 			//Check if connection is made
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -56,6 +51,9 @@ public class bridge {
 				}
 				sc.close();
 			}
+			/*
+			 *  "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY" };
+    */
 			
 			System.out.print("Here is the raw data in JSON format: " + "\n");
 			//System.out.print(inLine);
@@ -127,8 +125,6 @@ public class bridge {
 				String bachelor = list.toString().replace("[", "");
 				String bachelors = bachelor.replace("]", "");
 				System.out.print(bachelors);
-			
-				
 				//Insert elements
 				insert(schoolIDNode,nameNode,cityNode,stateNode,zipNode,urlNode, ownerShip, adminNode,transferNode,inStateNode,outStateNode,satNode,populationNode,bachelors);
 				
@@ -151,7 +147,6 @@ public class bridge {
 		}
 		
 	}
-
 	public static void createTable() throws SQLException {
 		try {
 			// establish a connection
@@ -160,7 +155,6 @@ public class bridge {
 			Statement statement = connection.createStatement();
 			statement.setQueryTimeout(30);
 			// create a table of schools
-			statement.executeUpdate("DROP TABLE Schools");
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS Schools"
 					+ "(ID INTEGER PRIMARY KEY UNIQUE, "
 					+ "Name varchar(50), "
@@ -206,36 +200,35 @@ public class bridge {
 		}
 		
 	}
-	
 	public static void bachelorCheck(JsonNode jsonNameNode, LinkedList list) throws SQLException {
 		//Majors
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.agriculture"), list, "Bachelors in Agriculture");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.ethnic_cultural_gender"), list, "Bachelors in Gender Studies");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.biological"), list, "Bachelors in Biology");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.business_marketing"), list,"Bachelors in Business");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.construction"), list,  "Bachelors in Construction");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.communication"), list, "Bachelors in Communication Studies");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.computer"), list, "Bachelors in Computer Science");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.security_law_enforcement"), list, "Bachelors in Criminal Justice");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.personal_culinary"), list, "Bachelors in Culinary Studies");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.education"), list, "Bachelors in Education");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.engineering"), list, "Bachelors in Engineering");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.language"), list, "Bachelors in Linguistics");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.legal"), list, "Bachelors in Culinary Studies");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.english"), list, "Bachelors in Law");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.humanities"), list, "Bachelors in Humanities");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.mathematics"), list, "Bachelors in Mathematics");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.biological"), list, "Bachelors in Biology");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.philosophy_religious"), list, "Bachelors in Philosophy");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.physical_science"), list, "Bachelors in Physical Science");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.psychology"), list, "Bachelors in Psychology");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.social_science"), list, "Bachelors in Social Sciences");
-		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.construction"), list,  "Bachelors in Construction");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.ethnic_cultural_gender"), list, "Bachelors in Gender Studies");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.health"), list,"Bachelors in Health");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.history"), list, "Bachelors in History");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.humanities"), list, "Bachelors in Humanities");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.english"), list, "Bachelors in Law");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.mathematics"), list, "Bachelors in Mathematics");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.philosophy_religious"), list, "Bachelors in Philosophy");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.psychology"), list, "Bachelors in Psychology");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.physical_science"), list, "Bachelors in Physics");
+		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.social_science"), list, "Bachelors in Social Sciences");
 		addToBachelors(jsonNameNode.get("latest.academics.program.bachelors.transportation"), list, "Bachelors in Transportation");
-		
-		
 		
 	}
 	public static void addToBachelors(JsonNode node, LinkedList list, String bachelor) {
-		if (node.asInt()==1) {
+		if (node.asInt()>=1) {
 			list.offer(bachelor);
 		}
 	}
