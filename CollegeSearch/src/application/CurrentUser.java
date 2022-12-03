@@ -8,7 +8,8 @@ public class CurrentUser {
 	private String currentEmail;
 	private String currentPassword;
 	private String currentSchool;
-	CurrentUser(int id, String firstName, String lastName, String userName, String email, String passWord) {
+	private String favorites;
+	CurrentUser(int id, String firstName, String lastName, String userName, String email, String passWord, String favorites) {
 		this.id=id;
 		this.currentFirstName=firstName;
 		this.currentLastName=lastName;
@@ -16,7 +17,15 @@ public class CurrentUser {
 		this.currentEmail=email;
 		this.currentPassword=passWord;
 		this.currentSchool=null;
-		
+		this.favorites=favorites;
+	}
+
+	public String getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(String favorites) {
+		this.favorites = favorites;
 	}
 
 	public String getCurrentSchool() {

@@ -5,35 +5,39 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7c376" height="280.0" layoutX="51.0" layoutY="54.0" stroke="BLACK" strokeType="INSIDE" width="498.0" AnchorPane.bottomAnchor="66.0" />
-      <Label fx:id="schoolNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="130.0" layoutY="22.0" prefHeight="17.0" prefWidth="340.0" text="schoolNamePlaceholder" />
-      <Button fx:id="backButton" layoutX="161.0" layoutY="354.0" mnemonicParsing="false" onAction="#homeFlip" text="Make new search" />
-      <Button fx:id="addToFavoritesButton" layoutX="321.0" layoutY="354.0" mnemonicParsing="false" onAction="#addToFavorites" text="Add to favorites" />
-      <Label layoutX="70.0" layoutY="316.0" text="Out-of-State Tuition:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="225.0" />
-      <Label layoutX="63.0" layoutY="81.0" text="ID:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="75.0" />
-      <Label layoutX="63.0" layoutY="108.0" text="Location:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="64.0" layoutY="174.0" text="Transfer Rate:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="174.0" />
-      <Label layoutX="58.0" layoutY="158.0" text="Admission Rate:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="150.0" />
-      <Label layoutX="62.0" layoutY="134.0" text="Zip Code:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="125.0" />
-      <Label layoutX="57.0" layoutY="234.0" text="In-State-Tuition:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="200.0" />
-      <Label layoutX="60.0" layoutY="253.0" text="Average SAT scores:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="250.0" />
-      <Label layoutX="58.0" layoutY="284.0" text="Student Population:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="275.0" />
-      <Label layoutX="372.0" layoutY="75.0" text="Degrees Offered" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffef77" height="200.0" layoutX="307.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="220.0" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="100.0" />
-      <ListView fx:id="degreesList" layoutX="317.0" layoutY="115.0" prefHeight="170.0" prefWidth="200.0" />
-      <Label fx:id="zipField" layoutX="119.0" layoutY="125.0" text="zipPlaceHolder" />
-      <Label fx:id="transferField" layoutX="140.0" layoutY="174.0" text="transferPlaceHolder" />
-      <Label fx:id="inField" layoutX="153.0" layoutY="200.0" text="inStatePlaceHolder" />
-      <Label fx:id="outField" layoutX="178.0" layoutY="225.0" text="outStatePlaceHolder" />
-      <Label fx:id="satField" layoutX="178.0" layoutY="250.0" text="SATlPaceHolder" />
-      <Label fx:id="populationField" layoutX="174.0" layoutY="275.0" text="PopulationPlaceHolder" />
-      <Label fx:id="locationField" layoutX="112.0" layoutY="100.0" text="locationPlaceHolder" />
-      <Label fx:id="idField" layoutX="77.0" layoutY="75.0" text="IDPlaceHolder" />
-      <Label fx:id="admissionField" layoutX="153.0" layoutY="150.0" text="admissionPlaceHolder" />
-      <Label layoutX="51.0" layoutY="317.0" text="For more information please visit this website:" />
-      <Label fx:id="urlField" layoutX="300.0" layoutY="317.0" prefHeight="17.0" prefWidth="220.0" text="webSite" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8d990" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Label fx:id="schoolNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="14.0" prefHeight="17.0" prefWidth="340.0" text="schoolNamePlaceholder">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Button fx:id="backButton" layoutX="143.0" layoutY="354.0" mnemonicParsing="false" onAction="#homeFlip" text="Make new search" />
+      <Button fx:id="addToFavoritesButton" layoutX="331.0" layoutY="354.0" mnemonicParsing="false" onAction="#addToFavorites" text="Add to favorites" />
+      <Label layoutX="70.0" layoutY="316.0" text="Out-of-State Tuition:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="225.0" />
+      <Label layoutX="63.0" layoutY="81.0" text="ID:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="75.0" />
+      <Label layoutX="63.0" layoutY="108.0" text="Location:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="64.0" layoutY="174.0" text="Transfer Rate:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="174.0" />
+      <Label layoutX="58.0" layoutY="158.0" text="Admission Rate:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="150.0" />
+      <Label layoutX="62.0" layoutY="134.0" text="Zip Code:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="125.0" />
+      <Label layoutX="57.0" layoutY="234.0" text="In-State-Tuition:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0" />
+      <Label layoutX="60.0" layoutY="253.0" text="Average SAT scores:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="250.0" />
+      <Label layoutX="58.0" layoutY="284.0" text="Student Population:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="275.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="340.0" layoutY="75.0" prefHeight="17.0" prefWidth="250.0" text="Degrees Offered" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffef77" height="200.0" layoutX="340.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="250.0" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="100.0" />
+      <ListView fx:id="degreesList" layoutX="350.0" layoutY="109.0" prefHeight="183.0" prefWidth="230.0" />
+      <Label fx:id="zipField" layoutX="108.0" layoutY="125.0" prefHeight="17.0" prefWidth="239.0" text="zipPlaceHolder" />
+      <Label fx:id="transferField" layoutX="194.0" layoutY="174.0" prefHeight="17.0" prefWidth="232.0" text="transferPlaceHolder" AnchorPane.leftAnchor="165.0" />
+      <Label fx:id="inField" layoutX="190.0" layoutY="200.0" prefHeight="17.0" prefWidth="203.0" text="inStatePlaceHolder" AnchorPane.leftAnchor="185.0" />
+      <Label fx:id="outField" layoutX="194.0" layoutY="225.0" prefHeight="17.0" prefWidth="195.0" text="outStatePlaceHolder" AnchorPane.leftAnchor="220.0" />
+      <Label fx:id="satField" layoutX="197.0" layoutY="250.0" prefHeight="17.0" prefWidth="189.0" text="SATlPaceHolder" AnchorPane.leftAnchor="200.0" />
+      <Label fx:id="populationField" layoutX="199.0" layoutY="275.0" prefHeight="17.0" prefWidth="203.0" text="PopulationPlaceHolder" AnchorPane.leftAnchor="200.0" />
+      <Label fx:id="locationField" layoutX="108.0" layoutY="100.0" prefHeight="17.0" prefWidth="246.0" text="locationPlaceHolder" AnchorPane.leftAnchor="108.0" />
+      <Label fx:id="idField" layoutX="47.0" layoutY="75.0" prefHeight="17.0" prefWidth="300.0" text="IDPlaceHolder" AnchorPane.leftAnchor="47.0" />
+      <Label fx:id="admissionField" layoutX="194.0" layoutY="150.0" prefHeight="17.0" prefWidth="212.0" text="admissionPlaceHolder" AnchorPane.leftAnchor="165.0" />
+      <Label layoutX="20.0" layoutY="308.0" text="For more information please visit this website:" AnchorPane.leftAnchor="20.0" />
+      <Label fx:id="urlField" layoutX="20.0" layoutY="331.0" prefHeight="17.0" prefWidth="322.0" text="webSite" />
    </children>
 </AnchorPane>

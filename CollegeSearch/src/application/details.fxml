@@ -6,11 +6,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
-       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8dca4" height="319.0" layoutX="68.0" layoutY="25.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
-      <GridPane layoutX="174.0" layoutY="109.0" prefHeight="152.0" prefWidth="253.0">
+       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8d990" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <GridPane layoutX="26.0" layoutY="90.0" prefHeight="267.0" prefWidth="550.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -22,16 +23,19 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="First Name:" />
-            <Label text="Last Name:" GridPane.rowIndex="1" />
-            <Label text="Username:" GridPane.rowIndex="2" />
-            <Label text="Email:" GridPane.rowIndex="3" />
-            <Label fx:id="currentEmail" text="emailPlaceHolder" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="currentUsername" text="usernamePlaceHolder" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="currentLast" text="lastPlaceHolder" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="currentFirst" text="firstPlaceHolder" GridPane.columnIndex="1" />
+            <Label prefHeight="17.0" prefWidth="190.0" text="First Name:   " GridPane.halignment="RIGHT" />
+            <Label prefHeight="17.0" prefWidth="190.0" text="Last Name:   " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label prefHeight="17.0" prefWidth="190.0" text="Username:   " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="190.0" text="Email:   " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <Label fx:id="currentEmail" prefHeight="17.0" prefWidth="275.0" text="emailPlaceHolder" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="currentUsername" prefHeight="17.0" prefWidth="275.0" text="usernamePlaceHolder" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="currentLast" prefHeight="17.0" prefWidth="275.0" text="lastPlaceHolder" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="currentFirst" prefHeight="17.0" prefWidth="275.0" text="firstPlaceHolder" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Label layoutX="258.0" layoutY="52.0" text="Account Details" />
+      <Label layoutX="221.0" layoutY="27.0" text="Account Details">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
    </children>
 </AnchorPane>

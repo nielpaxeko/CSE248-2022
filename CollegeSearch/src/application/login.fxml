@@ -9,18 +9,20 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
    <children>
-      <Label fx:id="heading" alignment="CENTER" contentDisplay="CENTER" layoutY="88.0" prefHeight="26.0" prefWidth="600.0" text="Welcome to Colleger Finder" textAlignment="CENTER" textFill="#302142">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8d990" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Label fx:id="heading" alignment="CENTER" contentDisplay="CENTER" layoutY="48.0" prefHeight="26.0" prefWidth="600.0" text="Welcome Back to Colleger Finder" textAlignment="CENTER" textFill="#302142">
          <font>
             <Font size="20.0" />
          </font>
          <opaqueInsets>
             <Insets />
          </opaqueInsets></Label>
-      <GridPane layoutX="144.0" layoutY="155.0" prefHeight="90.0" prefWidth="255.0">
+      <GridPane layoutX="94.0" layoutY="106.0" prefHeight="155.0" prefWidth="370.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -31,26 +33,26 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="userNameLabel" contentDisplay="CENTER" text="Username:">
+            <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" text="Username:" GridPane.halignment="CENTER">
                <GridPane.margin>
-                  <Insets left="60.0" />
+                  <Insets />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="userNameField" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" />
-            <Label fx:id="passWordLabel" text="Password:" GridPane.rowIndex="1">
+            <TextField fx:id="userNameField" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Label fx:id="passWordLabel" alignment="CENTER" contentDisplay="CENTER" text="Password:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="60.0" />
+                  <Insets />
                </GridPane.margin>
             </Label>
-            <PasswordField fx:id="passWordField" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="signUpButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#create" prefHeight="26.0" prefWidth="66.0" text="Sign Up" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <PasswordField fx:id="passWordField" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="signUpButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#create" prefHeight="26.0" prefWidth="120.0" text="Sign Up" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Button>
-            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="57.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="120.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets left="70.0" />
+                  <Insets />
                </GridPane.margin>
             </Button>
          </children>

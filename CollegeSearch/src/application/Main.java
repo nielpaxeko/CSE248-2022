@@ -1,7 +1,5 @@
 package application;	
-import server.*;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +9,6 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -35,24 +33,19 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.skin.MenuBarSkin;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-
 public class Main extends Application implements Initializable {
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
-	
-	private String school = "";
-	private static CurrentUser user;
-	
 	@FXML
     private BorderPane borderPane = new BorderPane();
+	private Stage stage;
+	private Scene scene;
+	private String school = "";
+	private static CurrentUser user;
 	static Connection connection = null;
 	static Statement statement = null;
 	String css = this.getClass().getResource("application.css").toExternalForm();
@@ -64,8 +57,9 @@ public class Main extends Application implements Initializable {
 	public void start(Stage loginStage) {
 		try {
 			borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
-			loginStage.setTitle("CollegeSearchTest");
-			Scene scene = new Scene(borderPane,600,700);
+			loginStage.setTitle("College Search Application");
+			Scene scene = new Scene(borderPane,800,800);
+			scene.getStylesheets().add(css);
 			loginStage.setScene(scene);
 			loginStage.show();
 			pane = FXMLLoader.load(getClass().getResource("login.fxml"));
@@ -74,9 +68,7 @@ public class Main extends Application implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-	// Login elements
-	
+	// Login Elements and Methods
     @FXML
     private AnchorPane pane;
     @FXML
@@ -100,19 +92,19 @@ public class Main extends Application implements Initializable {
     	String userName = userNameField.getText().toString().trim();
     	String passWord = passWordField.getText().toString().trim();
     	if (loginCheck(userName,passWord) == true) {
+    		// If correct, change pane
     		borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
         	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-      	  	scene = new Scene(borderPane, 600, 700);
+      	  	scene = new Scene(borderPane, 800, 800);
+      	  	scene.getStylesheets().add(css);
       	  	stage.setScene(scene);
       	  	pane = FXMLLoader.load(getClass().getResource("/application/search.fxml"));
       	  	paneSwitch(pane);
       	  	menuBar = new MenuBar();
-      	  	menuBar.setDisable(false);
-      	  	menuBar.setVisible(true);
     	}
     	else {
+    		// Set text to red if not correct and prompt retry
     		heading.setText("Username or Password were entered incorrectly, please try again.");
-    		// Set text to red
     		heading.setTextFill(Color.color(1, 0, 0));
     	}
     	
@@ -135,7 +127,7 @@ public class Main extends Application implements Initializable {
 			// If user exists, create instance of current user
 			if (rs.next()==true) {
 				bool = true;
-				user = new CurrentUser(rs.getInt("ID"),rs.getString("FirstName").toString(), rs.getString("LastName").toString(), rs.getString("UserName").toString(), rs.getString("email").toString(),rs.getString("Password").toString());
+				user = new CurrentUser(rs.getInt("ID"),rs.getString("FirstName").toString(), rs.getString("LastName").toString(), rs.getString("UserName").toString(), rs.getString("email").toString(),rs.getString("Password").toString(),rs.getString("Favorites"));
 				
 			} else {
 				bool = false;
@@ -149,7 +141,7 @@ public class Main extends Application implements Initializable {
 		}
 		return bool;
 	}
-    
+     
     // Create elements
     @FXML
     private Button back2login;
@@ -169,12 +161,13 @@ public class Main extends Application implements Initializable {
     private TextField firstNameField;
     @FXML
     private TextField lastNameField;
-
+ 
     @FXML
     void create(ActionEvent event) throws IOException {
     	borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-  	  	scene = new Scene(borderPane, 600, 400);
+  	  	scene = new Scene(borderPane, 800, 800);
+  	  	scene.getStylesheets().add(css);
   	  	stage.setScene(scene);
   	  	pane = FXMLLoader.load(getClass().getResource("/application/create.fxml"));
   	  	paneSwitch(pane);
@@ -213,8 +206,6 @@ public class Main extends Application implements Initializable {
     		createHeading.setTextFill(Color.color(1, 0, 0));
     	}
     }
-
-
     private void createUser(String firstName, String lastName, String email, String userName, String passWord) throws SQLException {
     	PreparedStatement preparedStatement = null;
     	ResultSet resultSet = null;
@@ -225,8 +216,8 @@ public class Main extends Application implements Initializable {
 			statement = connection.createStatement();
 			// insert records into Users
 			statement.executeUpdate("INSERT INTO Users "
-					+ "(FirstName, LastName, email, UserName, Password) "
-					+ "VALUES ('"+firstName+"', '"+lastName+"', '"+email+"' , '"+userName+"', '"+passWord+"')");
+					+ "(FirstName, LastName, email, UserName, Password, Favorites) "
+					+ "VALUES ('"+firstName+"', '"+lastName+"', '"+email+"' , '"+userName+"', '"+passWord+"', '')");
 			createHeading.setText("Account creation succesful");
     		// Set text to red
     		createHeading.setTextFill(Color.color(0, 1, 0));
@@ -273,15 +264,72 @@ public class Main extends Application implements Initializable {
     private ChoiceBox<String> typeBox = new ChoiceBox();
     @FXML
     private Slider transferSlider;
+    // Menu Elements
+    @FXML 
+	private MenuBar menuBar = new MenuBar();
+	@FXML
+	private Menu accounMenu;
+	@FXML 
+	private Menu homeMenu;
+	@FXML
+	private MenuItem logOutMenu;
+	@FXML
+	private TextField nameField;
+	@FXML
+	private MenuItem editAccountMenu;
+	@FXML
+    private MenuItem favoritesMenu;
+	@FXML
+    private MenuItem searchMenu;
     @Override
+    // Init
 	public void initialize(URL arg0, ResourceBundle arg1){
     	stateBox.getItems().addAll(states);
     	academicBox.getItems().addAll(majors);
     	typeBox.getItems().addAll(types);
     	displaySchoolData();
+    	displayUserData();
+    	displayFavorites();
+    	
+    	
 	}
-   
-    // Show data from School
+    // Display data methods
+    private void displayFavorites() {
+    	if (user!=null&&resultsList!=null) {
+    		try {
+    			connection = ConnectionUtilities.getConnection("Users.sqlite");
+    			statement = connection.createStatement();
+    			statement.setQueryTimeout(30);
+    			ResultSet rs = statement.executeQuery("SELECT * FROM Users WHERE UserName ='"+user.getCurrentUserName()+"'");
+    			//Display data
+    			if (rs.getString("Favorites")!=null) {
+    				String[] array = rs.getString("Favorites").split(",");
+        			for (int i = 0;i<array.length;i++) {
+        				favoritesList.getItems().add(array[i]);
+        			}
+    			}
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		} finally {
+    			ConnectionUtilities.closeConnection(connection);
+    		} 
+    	} 
+	}
+	private void displayUserData() {
+    	if(user!=null) {
+    		currentFirst.setText(user.getCurrentFirstName());
+    		currentLast.setText(user.getCurrentLastName());
+    		currentEmail.setText(user.getCurrentEmail());
+    		currentUsername.setText(user.getCurrentUserName());
+    		menuBar.setVisible(true);
+    		menuBar.setDisable(false);
+    	} else {
+    		menuBar.setVisible(false);
+    		menuBar.setDisable(true);
+    	}
+	}
+
+	// Show data from School
     public void displaySchoolData() {
     	if (user!=null&&resultsList!=null&&user.getCurrentSchool()!=null) {
     		schoolNameLabel.setText(user.getCurrentSchool());
@@ -422,7 +470,8 @@ public class Main extends Application implements Initializable {
     		user.setCurrentSchool(school);
     		borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
         	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-      	  	scene = new Scene(borderPane, 600, 700);
+      	  	scene = new Scene(borderPane, 800, 800);
+      	  	scene.getStylesheets().add(css);
       	  	stage.setScene(scene);
       	  	pane = FXMLLoader.load(getClass().getResource("/application/results.fxml"));
       	  	paneSwitch(pane);
@@ -464,21 +513,56 @@ public class Main extends Application implements Initializable {
     private Label urlField = new Label();
     @FXML
     private Label zipField = new Label();
-
+    // Favorites Elements 
+    @FXML
+    private ListView<String> favoritesList = new ListView<String>();
     @FXML
     void addToFavorites(ActionEvent event) {
-
+    	String fav = schoolNameLabel.getText();
+    	String prev;
+    	try {
+    		connection = ConnectionUtilities.getConnection("Users.sqlite");
+			// create a statement object from the connection
+			statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			String favQuery;
+			PreparedStatement ps = null;
+			ResultSet rs = statement.executeQuery("SELECT * FROM Users WHERE UserName = '"+user.getCurrentUserName()+"'");
+			favQuery = "UPDATE Users SET Favorites = ? WHERE UserName = ? ";
+			if (rs.getString("Favorites").isBlank() && !rs.getString("Favorites").contains(fav)) {
+    			ps = connection.prepareStatement(favQuery);
+    			ps.setString(1, fav);
+    			ps.setString(2, user.getCurrentUserName());
+    			ps.execute();
+        		System.out.println(fav);
+        	}  else if (!rs.getString("Favorites").isBlank() && !rs.getString("Favorites").contains(fav)) {
+    			prev = rs.getString("Favorites");
+        		String newFav = prev + ", " + fav;
+        		ps = connection.prepareStatement(favQuery);
+    			ps.setString(1, newFav);
+    			ps.setString(2, user.getCurrentUserName());
+    			ps.execute();
+        		System.out.println(fav);
+        	} else {
+        		System.out.println("This school has already been made a favorite of yours.");
+        	}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtilities.closeConnection(connection);
+		}
     }
   
     // Account elements
 	@FXML
-	private Label currentEmail;
+	private Label currentEmail = new Label();
 	@FXML
-    private Label currentFirst;
+    private Label currentFirst = new Label();
     @FXML
-    private Label currentLast;
+    private Label currentLast = new Label();
     @FXML
-    private Label currentUsername;
+    private Label currentUsername = new Label();
     // Edit elements
     @FXML
     private Button deleteButton;
@@ -497,14 +581,31 @@ public class Main extends Application implements Initializable {
     @FXML
     private PasswordField oldPassword = new PasswordField();
     @FXML
-    void delete(ActionEvent event) {
-    	System.out.println(user.getId());
-		System.out.println(user.getCurrentFirstName());
-		System.out.println(user.getCurrentLastName());
-		System.out.println(user.getCurrentUserName());
-		System.out.println(user.getCurrentEmail());
-		System.out.println(user.getCurrentPassword());
-		System.out.println(user.getCurrentSchool());
+    void delete(ActionEvent event) throws IOException  {
+    	ButtonType confirm = new ButtonType("Yes, I am sure");
+    	ButtonType cancel = new ButtonType("NO!!!");
+    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    	alert.setTitle("Account Deletion Confirmation");
+    	alert.setHeaderText("Wait, this action is irreversible!!!");
+    	alert.setContentText("Do you really want to delete this account?");
+    	alert.getButtonTypes().remove(ButtonType.OK);
+    	alert.getButtonTypes().remove(ButtonType.CANCEL);
+    	alert.getButtonTypes().addAll(confirm, cancel);
+    	alert.showAndWait();
+    	if (alert.getResult() == confirm) {
+    		try {
+				connection = ConnectionUtilities.getConnection("Users.sqlite");
+				statement = connection.createStatement();
+				statement.setQueryTimeout(30);
+				ResultSet rs = statement.executeQuery("DELETE FROM Users WHERE UserName = '"+user.getCurrentUserName()+"'");
+			} catch (SQLException e) {
+				System.out.println("");
+			} finally {
+				logOut(event);
+				System.out.println("Account has been deleted successfully");
+			}
+    		
+		}
     }
     @FXML
     void edit() throws SQLException, NullPointerException {
@@ -538,28 +639,15 @@ public class Main extends Application implements Initializable {
     		editLabel.setTextFill(Color.color(0, 1, 0));
     	}
     }
-    // Menu
-	@FXML
-	private Menu accounMenu;
-	@FXML 
-	private Menu homeMenu;
-	@FXML 
-	private MenuBar menuBar;
-	@FXML
-	private MenuItem logOutMenu;
-	@FXML
-	private TextField nameField;
-	@FXML
-	private MenuItem editAccountMenu;
-	@FXML
-    private MenuItem favoritesMenu;
-	@FXML
-    private MenuItem searchMenu;
+    
 	@FXML
     void logOut(ActionEvent event) throws IOException {
+		user = null;
+		displayUserData();
 		borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-  	  	scene = new Scene(borderPane, 600, 700);
+  	  	scene = new Scene(borderPane, 800, 800);
+  	  	scene.getStylesheets().add(css);
   	  	stage.setScene(scene);
   	  	pane = FXMLLoader.load(getClass().getResource("/application/login.fxml"));
   	  	paneSwitch(pane);
@@ -584,7 +672,8 @@ public class Main extends Application implements Initializable {
 	void homeFlip(ActionEvent event) throws IOException {
 		borderPane = FXMLLoader.load(getClass().getResource("home.fxml"));
     	stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-  	  	scene = new Scene(borderPane, 600, 700);
+  	  	scene = new Scene(borderPane, 800, 800);
+  	  	scene.getStylesheets().add(css);
   	  	stage.setScene(scene);
   	  	pane = FXMLLoader.load(getClass().getResource("/application/search.fxml"));
   	  	paneSwitch(pane);
@@ -601,11 +690,13 @@ public class Main extends Application implements Initializable {
 	}
 	@FXML
 	void loginFlip(ActionEvent event) throws IOException {
+		user = null;
+		displayUserData();
 		pane = FXMLLoader.load(getClass().getResource("/application/login.fxml"));
   	  	paneSwitch(pane);
 	}
 	@FXML
-	void paneSwitch(Pane pane)  {
+	public void paneSwitch(Pane pane)  {
 		borderPane.setCenter(pane);
 	}
 

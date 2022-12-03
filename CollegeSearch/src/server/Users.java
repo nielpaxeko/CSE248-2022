@@ -18,23 +18,24 @@ public class Users {
 			statement.setQueryTimeout(30);
 			
 			// create a table Users
-			statement.executeUpdate("DROP TABLE Users");
+			//statement.executeUpdate("DROP TABLE Users");
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS Users "
 					+ "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ "FirstName VARCHAR(50) NOT NULL, "
 					+ "LastName VARCHAR(50) NOT NULL,"
 					+ "email VARCHAR(50) NOT NULL UNIQUE,"
 					+ "UserName VARCHAR(15) NOT NULL UNIQUE,"
-					+ "Password VARCHAR(15) NOT NULL"
+					+ "Password VARCHAR(15) NOT NULL,"
+					+ "Favorites"
 					+ ")");
 			// insert records into Users
 			statement.executeUpdate("INSERT INTO Users "
-					+ "(FirstName, LastName, email, UserName, Password) "
-					+ "VALUES ('John', 'Doe', 'jdoe@gmail.com', 'jdoe', 'jd123')");
+					+ "(FirstName, LastName, email, UserName, Password, Favorites) "
+					+ "VALUES ('John', 'Doe', 'jdoe@gmail.com', 'jdoe', 'jd123', '')");
 			
 			statement.executeUpdate("INSERT INTO Users "
-					+ "(FirstName, LastName, email, UserName, Password) "
-					+ "VALUES ('Joey', 'Smith', 'jsmith@gmail.com', 'jsmith', 'js456')");
+					+ "(FirstName, LastName, email, UserName, Password, Favorites) "
+					+ "VALUES ('Edgar', 'Pacheco', 'edpvpro@hotmail.com', 'nielpaxeko', 'dan4096', '')");
 			
 			ResultSet rs = statement.executeQuery("SELECT * FROM Users");
 			// Now we create a favorites list
