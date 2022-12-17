@@ -66,7 +66,7 @@ public class Main extends Application implements Initializable {
 			borderPane.setCenter(pane);
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	// Login Elements and Methods
     @FXML
@@ -352,7 +352,8 @@ public class Main extends Application implements Initializable {
     			urlField.setTextFill(Color.color(0, 0, 1));
     			satField.setText(rs.getString("SAT"));
     			populationField.setText(rs.getString("Population"));
-    			String[] array = rs.getString("Programs").split(",");
+    			String[] array = rs.getString("Programs").split(", ");
+
     			for (int i = 0;i<array.length;i++) {
     				degreesList.getItems().add(array[i]);
     				

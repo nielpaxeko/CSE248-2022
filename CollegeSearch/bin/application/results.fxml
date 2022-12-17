@@ -29,7 +29,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffef77" height="200.0" layoutX="340.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="250.0" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="100.0" />
       <ListView fx:id="degreesList" layoutX="350.0" layoutY="109.0" prefHeight="183.0" prefWidth="230.0" />
       <Label fx:id="zipField" layoutX="108.0" layoutY="125.0" prefHeight="17.0" prefWidth="239.0" text="zipPlaceHolder" />
-      <Label fx:id="transferField" layoutX="194.0" layoutY="174.0" prefHeight="17.0" prefWidth="232.0" text="transferPlaceHolder" AnchorPane.leftAnchor="165.0" />
+      <Label fx:id="transferField" layoutX="194.0" layoutY="174.0" prefHeight="17.0" prefWidth="232.0" text="transferPlaceHolder" AnchorPane.leftAnchor="162.0" />
       <Label fx:id="inField" layoutX="190.0" layoutY="200.0" prefHeight="17.0" prefWidth="203.0" text="inStatePlaceHolder" AnchorPane.leftAnchor="185.0" />
       <Label fx:id="outField" layoutX="194.0" layoutY="225.0" prefHeight="17.0" prefWidth="195.0" text="outStatePlaceHolder" AnchorPane.leftAnchor="220.0" />
       <Label fx:id="satField" layoutX="197.0" layoutY="250.0" prefHeight="17.0" prefWidth="189.0" text="SATlPaceHolder" AnchorPane.leftAnchor="200.0" />
